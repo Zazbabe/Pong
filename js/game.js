@@ -1,8 +1,3 @@
-<html>
-Zaz's pong
-<canvas id="gameCanvas" width="800" height="600"></canvas>
-
-<script>
 var canvas;
 var canvasContext;
 var ballX = 50;
@@ -21,33 +16,33 @@ window.onload = function() {
 }, 1000/framesPerSecond);
 }
 
-function moveEverything(){
-	ballX = ballX + ballSpeedX;
-	ballY = ballY + ballSpeedY;
+ function moveEverything(){
+// 	ballX = ballX + ballSpeedX;
+// 	ballY = ballY + ballSpeedY;
 
-	// this makes the ball bounce back at the left end of the canvas
-	if(ballX < 0)
-	{
-		ballSpeedX = -ballSpeedX;
-	}
+// 	// this makes the ball bounce back at the left end of the canvas
+// 	if(ballX < 0)
+// 	{
+// 		ballSpeedX = -ballSpeedX;
+// 	}
 
-	// this makes the ball bounce back at the right end of the canvas
-	if(ballX > canvas.width)
-	{
-		ballSpeedX = -ballSpeedX;
-	}
+// 	// this makes the ball bounce back at the right end of the canvas
+// 	if(ballX > canvas.width)
+// 	{
+// 		ballSpeedX = -ballSpeedX;
+// 	}
 
-	// this makes the ball bounce back at the up side of the canvas
-	if(ballY < 0)
-	{
-		ballSpeedY = -ballSpeedY;
-	}
+// 	// this makes the ball bounce back at the up side of the canvas
+// 	if(ballY < 0)
+// 	{
+// 		ballSpeedY = -ballSpeedY;
+// 	}
 
-	// this makes the ball bounce back at the down side of the canvas
-	if(ballY > canvas.height)
-	{
-		ballSpeedY = -ballSpeedY;
-	}
+// 	// this makes the ball bounce back at the down side of the canvas
+// 	if(ballY > canvas.height)
+// 	{
+// 		ballSpeedY = -ballSpeedY;
+}
 
 function drawEverything() {
 	// next line blanks out the screen with black
@@ -75,6 +70,3 @@ function colorRect(leftX,topY,width,height,drawColor){
 	canvasContext.fillStyle = drawColor;
 	canvasContext.fillRect(leftX,topY,width,height);
 }
-
-</script>
-</html>
