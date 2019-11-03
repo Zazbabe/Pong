@@ -27,6 +27,18 @@ var ballSpeedY = 4;
 var paddle1Y = 250;
 const PADDLE_HEIGHT = 100;
 
+//this calculates where the mouse is to make player move the paddle
+function calculateMousePos(evt){
+	var rect = canvas.getBoundingClientRect();
+	var root = document.documentElement;
+	var mouseX = evt.clientX - rect.left - root.scrollLeft;
+	var mouseY = evt.clientY - rect.top - root.scrollTop;
+	return{
+		x:mouseX,
+		y:mouseY
+	};
+}
+
 window.onload = function() {
 	canvas = document.getElementById('gameCanvas');
 	canvasContext = canvas.getContext('2d');
@@ -37,6 +49,14 @@ window.onload = function() {
 	drawEverything();
 }, 1000/framesPerSecond);
 }
+
+//this makes the player move the paddle 
+canvas-addEventListener('mousemove', 
+function(evt){
+	var mousePos = calculateMousePos(evt);
+	//this follow the center position on the mousemove when the mouse moves the paddle
+	paddle1Y = mousePos.y-(PADDLE_HEIGHT/2);
+})
 
 function moveEverything(){
 ballX = ballX + ballSpeedX;
@@ -74,7 +94,7 @@ function drawEverything() {
 	colorRect(0,0,canvas.width,canvas.height,'black');
 
 	//this is the left player paddle
-	colorRect(0,210,10,100,'white');
+	colorRect(0,paddle1Y,10,PADDLE_HEIGHT,'white');
 	
 	// next line draws the ball	
 	colorCircle(ballX, ballY, 10, 'white');
