@@ -7,6 +7,9 @@
 
 		var player1Score = 0;
 		var player2Score = 0;
+		const WINNING_SCORE = 3;
+
+		var showingWinScreen = false;
 
 		var paddle1Y = 250;
 		var paddle2Y = 250;
@@ -46,6 +49,13 @@
 
 		//resets the ball and puts it in the middle and restarts
 		function ballReset() {
+
+			if(player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE){
+				player1Score = 0;
+				player2Score = 0;
+				showingWinScreen = true;
+			}
+
 			ballSpeedX = -ballSpeedX;
 			ballX = canvas.width / 2;
 			ballY = canvas.height / 2;
@@ -55,14 +65,18 @@
 		function computerMovement(){
 			let paddle2YCenter =  paddle2Y + (PADDLE_HEIGHT/2);
 
-			if(paddle2YCenter < ballY - 35){
+			if(paddle2YCenter < ballY-35){
 				paddle2Y += 6;
-			} else if(paddle2YCenter < ballY+35) {
+			} else if(paddle2YCenter > ballY+35) {
 				paddle2Y -= 6;
 			}
 		}
 
 		function moveEverything() {
+
+			if(showingWinScreen){
+				return;
+			}
 
 			computerMovement();
 
@@ -74,10 +88,14 @@
 				//bounces ball back when it misses the paddle
 				if (ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT) {
 					ballSpeedX = -ballSpeedX;
+
+					//changes the angle of the ball when it hits the paddle (ball control)
+					var deltaY = ballY -(paddle1Y+PADDLE_HEIGHT/2);
+					ballSpeedY = deltaY * 0.35;
 				} else {
 					//resets the ball if it leaves the screeen to the left
+					player2Score++; //adds the score for player 2 before reseting the ball, this MUST be before ballReset()
 					ballReset();
-					player2Score++;
 				}
 			}
 			// this makes the ball bounce back at the right end of the canvas
@@ -85,10 +103,15 @@
 						//bounces ball back when it misses the computer paddle
 						if (ballY > paddle2Y && ballY < paddle2Y + PADDLE_HEIGHT) {
 					ballSpeedX = -ballSpeedX;
+
+					//changes the angle of the ball when it hits the paddle (ball control)
+					var deltaY = ballY -(paddle2Y+PADDLE_HEIGHT/2);
+					ballSpeedY = deltaY * 0.35
+
 				} else {
 					//resets the ball if it leaves the screeen to the right
+					player1Score++; //adds the score for player1 before resetting the ball, this MUST be before ballReset()
 					ballReset();
-					player1Score++;
 				}
 			}
 
@@ -104,11 +127,17 @@
 		}
 
 		function drawEverything() {
-			console.log(ballX);
-
+			
 			// next line blanks out the screen with black
 			colorRect(0, 0, canvas.width, canvas.height, 'black');
 
+			
+			if(showingWinScreen){
+				canvasContext.fillStyle = 'white';
+				canvasContext.fillText("Click to continue!", 100, 100);
+				return;
+			}
+			
 			//this is the left player paddle
 			colorRect(0, paddle1Y, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
 
