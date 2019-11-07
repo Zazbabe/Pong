@@ -46,6 +46,7 @@
 				drawEverything();
 			}, 1000 / framesPerSecond);
 			
+			//restarts game
 			canvas.addEventListener('mousedown', handleMouseClick);
 			
 			//this makes the player move the paddle 
@@ -86,6 +87,7 @@
 				return;
 			}
 
+			//calls on function
 			computerMovement();
 
 			ballX = ballX + ballSpeedX;
