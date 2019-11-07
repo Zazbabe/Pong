@@ -28,6 +28,14 @@
 			};
 		}
 
+		function handleMouseClick(){
+			if(showingWinScreen){
+				player1Score = 0;
+				player2Score = 0;
+				showingWinScreen = false;
+			}
+		}
+
 		window.onload = function () {
 			canvas = document.getElementById('gameCanvas');
 			canvasContext = canvas.getContext('2d');
@@ -37,22 +45,22 @@
 				moveEverything();
 				drawEverything();
 			}, 1000 / framesPerSecond);
-		}
-
-		//this makes the player move the paddle 
-		canvas - addEventListener('mousemove',
+			
+			canvas.addEventListener('mousedown', handleMouseClick);
+			
+			//this makes the player move the paddle 
+			canvas - addEventListener('mousemove',
 			function (evt) {
 				var mousePos = calculateMousePos(evt);
 				//this follow the center position on the mousemove when the mouse moves the paddle
 				paddle1Y = mousePos.y - (PADDLE_HEIGHT / 2);
-			})
+			});
+		}
 
 		//resets the ball and puts it in the middle and restarts
 		function ballReset() {
 
 			if(player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE){
-				player1Score = 0;
-				player2Score = 0;
 				showingWinScreen = true;
 			}
 
@@ -74,7 +82,7 @@
 
 		function moveEverything() {
 
-			if(showingWinScreen){
+			if(showingWinScreen == true){
 				return;
 			}
 
@@ -126,15 +134,26 @@
 			}
 		}
 
+	
+
 		function drawEverything() {
 			
 			// next line blanks out the screen with black
 			colorRect(0, 0, canvas.width, canvas.height, 'black');
 
-			
-			if(showingWinScreen){
+			//showing message of who won
+			if(showingWinScreen == true){
 				canvasContext.fillStyle = 'white';
-				canvasContext.fillText("Click to continue!", 100, 100);
+				
+				if(player1Score >= WINNING_SCORE){
+					canvasContext.fillText("Left player won!", 350, 200);
+					
+				} else if (player2Score >= WINNING_SCORE){
+					canvasContext.fillText("Right player won!", 350, 200);
+				}
+
+				canvasContext.fillText("Click to continue", 350, 500);
+
 				return;
 			}
 			
