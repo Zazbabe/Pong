@@ -136,7 +136,11 @@
 			}
 		}
 
-	
+	function drawNet(){
+		for(var i=0; i<canvas.height; i+=40){
+			colorRect(canvas.width/2-1, i, 2, 20, 'white');
+		}
+	}
 
 		function drawEverything() {
 			
@@ -159,6 +163,8 @@
 				return;
 			}
 			
+			drawNet();
+
 			//this is the left player paddle
 			colorRect(0, paddle1Y, PADDLE_WIDTH, PADDLE_HEIGHT, 'white');
 
